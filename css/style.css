@@ -1,0 +1,24 @@
+body {
+    height: 100vh;
+    background: #333 url("../images/njHhZgk.jpg") center center/cover no-repeat !important;
+}
+
+.jp-bg-nav {
+    background-color: #152225;
+    background: -webkit-linear-gradient(bottom, #646464 0%, #152225 75%);
+}
+
+.jp-bg-footer {
+    background-color: #152225;
+    background: -webkit-linear-gradient(top, #646464 0%, #152225 75%);
+}
+
+.jp-bg-details {
+    background-color: #e3b71f;
+    background: -webkit-radial-gradient(top center, #fff 0%, #eac67a 40%, #e3b71f 80%, yellow 100%);
+}
+
+.jp-shadow {
+    text-shadow: -6px -6px 6px #000;
+    text-shadow: 6px 6px 6px #000;
+}
