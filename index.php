@@ -1,11 +1,26 @@
 <?php
-    require_once 'db/db_connect.php';
+    // require_once 'db/db_connect.php';
     // if ($_POST) {
     //     $db = db_connect();
-    //     $stmt = $db->prepare('SELECT * FROM `imdb_movie` WHERE `name` = ?');
-    //     $stmt->execute($_GET['name']);
-    //     $movie = $stmt->fetchAll();
+    //     $stmt = $db->prepare('SELECT * FROM `imdb_movie` WHERE `name` LIKE ?');
+    //     $stmt->execute(['%' . $_POST['name'] . '%']);
+    //     $movies = $stmt->fetchAll();
+    //     if (empty($movies)||(strlen(str_replace(' ', '', $_POST['name']))==0)) {
+    //         $movies = 'No matches found';
+    //     }
     // }
+    require 'db/db.php';
+    
+    $query = 'SELECT * FROM `imdb_movie` WHERE `name` LIKE ?';
+    if($_POST) {
+        $name = '%' . $_POST['name'] . '%';
+        $stmt = db::query($query, [$name]);
+        $movies = $stmt->fetchAll();
+        if (empty($movies)||(strlen(str_replace(' ', '', $_POST['name']))==0)) {
+            $movies = 'No matches found';
+        }
+    }    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,17 +30,18 @@
 <body class="d-flex flex-column justify-content-between">
     <?php include 'includes/navbar.php'; ?>
 
-    <section id="main" class="w-50 mx-auto">
-        <div class="text-center mb-5">
-            <img class="img-fluid" src="images/Logo_JPMDb_150.png" alt="JPMDb Logo">
-        </div>
-        <h1 class="text-light jp-shadow">Search for a movie</h1>
-        <form action="" method="post">
-            <div class="form-group">
-                <input class="form-control bg-dark border border-light text-light" type="search" name="search" placeholder="Search for a movie...">
+    <?php if ($_POST) : ?>
+        <?php if (strlen($_POST['name'])!=0) : ?>
+            <?php include 'includes/result.php'; ?>
+        <?php else : ?>
+            <?php include 'includes/search.php'; ?>
+            <div class="w-25 mt-2 mx-auto border border-dark rounded alert alert-danger" role="alert">
+                You have not filled the search bar!
             </div>
-        </form>
-    </section>
+        <?php endif; ?>
+    <?php else : ?>
+        <?php include 'includes/search.php'; ?>
+    <?php endif; ?>
 
     <?php include 'includes/footer.php'; ?>
 
