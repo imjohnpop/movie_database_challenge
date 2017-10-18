@@ -1,22 +1,12 @@
 <?php
-    // require_once 'db/db_connect.php';
-    // if ($_POST) {
-    //     $db = db_connect();
-    //     $stmt = $db->prepare('SELECT * FROM `imdb_movie` WHERE `name` LIKE ?');
-    //     $stmt->execute(['%' . $_POST['name'] . '%']);
-    //     $movies = $stmt->fetchAll();
-    //     if (empty($movies)||(strlen(str_replace(' ', '', $_POST['name']))==0)) {
-    //         $movies = 'No matches found';
-    //     }
-    // }
     require 'db/db.php';
     
     $query = 'SELECT * FROM `imdb_movie` WHERE `name` LIKE ?';
     if($_POST) {
-        $name = '%' . $_POST['name'] . '%';
+        $name = '%' . $_POST['search'] . '%';
         $stmt = db::query($query, [$name]);
         $movies = $stmt->fetchAll();
-        if (empty($movies)||(strlen(str_replace(' ', '', $_POST['name']))==0)) {
+        if (empty($movies)||(strlen(str_replace(' ', '', $_POST['search']))==0)) {
             $movies = 'No matches found';
         }
     }    
@@ -31,7 +21,7 @@
     <?php include 'includes/navbar.php'; ?>
 
     <?php if ($_POST) : ?>
-        <?php if (strlen($_POST['name'])!=0) : ?>
+        <?php if (strlen($_POST['search'])!=0) : ?>
             <?php include 'includes/result.php'; ?>
         <?php else : ?>
             <?php include 'includes/search.php'; ?>
